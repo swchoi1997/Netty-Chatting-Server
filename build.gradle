@@ -10,6 +10,13 @@ repositories {
 }
 
 dependencies {
+    implementation files("libs/java-lib-1.4.jar")
+    implementation 'io.netty:netty-all:4.1.104.Final'
+    implementation 'ch.qos.logback:logback-classic:1.2.6'
+
+    implementation 'com.google.code.gson:gson:2.10.1'
+
+
     testImplementation platform('org.junit:junit-bom:5.9.1')
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }
