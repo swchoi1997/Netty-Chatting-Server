@@ -1,4 +1,4 @@
-package org.hacsick.chat.message;
+package org.hacsick.server.message;
 
 import java.util.Map;
 import java.util.Optional;

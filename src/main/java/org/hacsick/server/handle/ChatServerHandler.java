@@ -1,10 +1,10 @@
-package org.hacsick.chat.server;
+package org.hacsick.server.handle;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import org.hacsick.chat.room.ChatRoomManager;
-import org.hacsick.chat.user.User;
+import org.hacsick.server.room.ChatRoomManager;
+import org.hacsick.server.user.User;
 
 public class ChatServerHandler extends ChannelInboundHandlerAdapter {
 

@@ -1,8 +1,8 @@
-package org.hacsick.chat.room;
+package org.hacsick.server.room;
 
-import org.hacsick.chat.message.Command;
-import org.hacsick.chat.mq.MessageQueue;
-import org.hacsick.chat.user.User;
+import org.hacsick.server.message.Command;
+import org.hacsick.server.mq.MessageQueue;
+import org.hacsick.server.user.User;
 
 public interface ChatRoomSubject {
 

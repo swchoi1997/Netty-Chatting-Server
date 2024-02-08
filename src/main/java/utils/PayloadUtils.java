@@ -1,9 +1,9 @@
 package utils;
 
 import java.util.UUID;
-import org.hacsick.chat.message.Command;
-import org.hacsick.chat.message.Message;
-import org.hacsick.chat.message.Payload;
+import org.hacsick.server.message.Command;
+import org.hacsick.server.message.Message;
+import org.hacsick.server.message.Payload;
 
 public class PayloadUtils {
 

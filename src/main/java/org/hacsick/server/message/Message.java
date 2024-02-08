@@ -1,4 +1,4 @@
-package org.hacsick.chat.message;
+package org.hacsick.server.message;
 
 public interface Message {
 

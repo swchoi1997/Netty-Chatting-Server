@@ -1,6 +1,6 @@
-package org.hacsick.chat.user;
+package org.hacsick.server.user;
 
-import org.hacsick.chat.message.Payload;
+import org.hacsick.server.message.Payload;
 
 public interface Observer{
 

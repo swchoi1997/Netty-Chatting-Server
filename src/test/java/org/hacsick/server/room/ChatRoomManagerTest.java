@@ -1,11 +1,10 @@
-package org.hacsick.chat.room;
+package org.hacsick.server.room;
 
-import static org.hacsick.chat.server.ChatServerHandlerInitializer.LOBBY;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.hacsick.server.handle.ChatServerHandlerInitializer.LOBBY;
 
 import java.util.UUID;
-import org.hacsick.chat.mq.BlockingMessageQueue;
-import org.hacsick.chat.mq.MessageQueue;
+import org.hacsick.server.mq.BlockingMessageQueue;
+import org.hacsick.server.mq.MessageQueue;
 import org.junit.jupiter.api.Test;
 
 class ChatRoomManagerTest {

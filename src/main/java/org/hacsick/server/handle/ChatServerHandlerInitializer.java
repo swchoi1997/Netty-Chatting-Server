@@ -1,4 +1,4 @@
-package org.hacsick.chat.server;
+package org.hacsick.server.handle;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
@@ -11,14 +11,14 @@ import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 import io.netty.util.CharsetUtil;
 import java.util.UUID;
-import java.util.concurrent.LinkedBlockingQueue;
-import org.hacsick.chat.mq.BlockingMessageQueue;
-import org.hacsick.chat.mq.MessageQueue;
-import org.hacsick.chat.room.ChatRoom;
-import org.hacsick.chat.room.ChatRoomManager;
-import org.hacsick.chat.room.ChatRoomSubject;
-import org.hacsick.chat.codec.PayloadDecoder;
-import org.hacsick.chat.user.User;
+import org.hacsick.server.codec.PayloadEncoder;
+import org.hacsick.server.mq.BlockingMessageQueue;
+import org.hacsick.server.mq.MessageQueue;
+import org.hacsick.server.room.ChatRoom;
+import org.hacsick.server.room.ChatRoomManager;
+import org.hacsick.server.room.ChatRoomSubject;
+import org.hacsick.server.codec.PayloadDecoder;
+import org.hacsick.server.user.User;
 
 public class ChatServerHandlerInitializer extends ChannelInitializer<SocketChannel> {
 
@@ -38,7 +38,8 @@ public class ChatServerHandlerInitializer extends ChannelInitializer<SocketChann
 
     @Override
     public void initChannel(SocketChannel ch) {
-        User admin = this.createAdmin(ch);
+        this.lobby.changeOwner(this.createAdmin(ch));
+
         ChatRoomManager chatRoomManager = ChatRoomManager.of(this.lobby);
 
         ChannelPipeline pipeline = ch.pipeline();
@@ -46,6 +47,8 @@ public class ChatServerHandlerInitializer extends ChannelInitializer<SocketChann
                 .addLast(new StringDecoder(CharsetUtil.UTF_8))
                 .addLast(new PayloadDecoder()) // Decoder
                 .addLast(new ChatServerHandler(chatRoomManager))
+                .addLast(new PayloadEncoder())
+                .addLast(new StringEncoder(CharsetUtil.UTF_8))
         ;
     }
 

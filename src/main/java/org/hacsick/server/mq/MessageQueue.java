@@ -1,4 +1,4 @@
-package org.hacsick.chat.mq;
+package org.hacsick.server.mq;
 
 import java.util.concurrent.BlockingQueue;
 

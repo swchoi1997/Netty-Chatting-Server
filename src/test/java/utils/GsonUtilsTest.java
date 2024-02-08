@@ -1,8 +1,8 @@
 package utils;
 
-import org.hacsick.chat.message.Command;
-import org.hacsick.chat.message.CommonMessage;
-import org.hacsick.chat.message.Payload;
+import org.hacsick.server.message.Command;
+import org.hacsick.server.message.CommonMessage;
+import org.hacsick.server.message.Payload;
 import org.junit.jupiter.api.Test;
 
 class GsonUtilsTest {

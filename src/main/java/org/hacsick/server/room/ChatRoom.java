@@ -1,8 +1,8 @@
-package org.hacsick.chat.room;
+package org.hacsick.server.room;
 
-import static org.hacsick.chat.message.Command.CHAT_ROOM_ENTER;
-import static org.hacsick.chat.message.Command.CHAT_ROOM_LEAVE;
-import static org.hacsick.chat.server.ChatServerHandlerInitializer.LOBBY;
+import static org.hacsick.server.message.Command.CHAT_ROOM_ENTER;
+import static org.hacsick.server.message.Command.CHAT_ROOM_LEAVE;
+import static org.hacsick.server.handle.ChatServerHandlerInitializer.LOBBY;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,11 +14,11 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-import org.hacsick.chat.message.Command;
-import org.hacsick.chat.message.CommonMessage;
-import org.hacsick.chat.message.Payload;
-import org.hacsick.chat.mq.MessageQueue;
-import org.hacsick.chat.user.User;
+import org.hacsick.server.message.Command;
+import org.hacsick.server.message.CommonMessage;
+import org.hacsick.server.message.Payload;
+import org.hacsick.server.mq.MessageQueue;
+import org.hacsick.server.user.User;
 
 public class ChatRoom implements ChatRoomSubject {
 

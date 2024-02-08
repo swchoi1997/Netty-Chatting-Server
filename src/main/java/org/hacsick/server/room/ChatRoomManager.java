@@ -1,6 +1,6 @@
-package org.hacsick.chat.room;
+package org.hacsick.server.room;
 
-import static org.hacsick.chat.server.ChatServerHandlerInitializer.LOBBY;
+import static org.hacsick.server.handle.ChatServerHandlerInitializer.LOBBY;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,16 +8,13 @@ import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import org.example.thread.pool.DynamicThreadPool;
-import org.example.time.timecal.TimeStringCal;
-import org.hacsick.chat.message.Command;
-import org.hacsick.chat.message.CommonMessage;
-import org.hacsick.chat.mq.MessageQueue;
-import org.hacsick.chat.thread.CustomThreadPool;
-import org.hacsick.chat.user.User;
+import org.hacsick.server.message.Command;
+import org.hacsick.server.message.CommonMessage;
+import org.hacsick.server.mq.MessageQueue;
+import org.hacsick.server.user.User;
 import utils.PayloadUtils;
 
 public class ChatRoomManager {
@@ -77,7 +74,7 @@ public class ChatRoomManager {
                         .findFirst();
 
         if (beGoingToEnterChatRoomName.isEmpty()) {
-            this.messageQueue.offer(() ->{
+            this.messageQueue.offer(() -> {
                 user.notify(PayloadUtils.createMessage(Command.CHAT_ROOM_ERROR,
                         CommonMessage.ofAdmin(user.getName(), "Chat Room Not Exist")));
             });
@@ -105,7 +102,6 @@ public class ChatRoomManager {
     public void notifyMessage(final User user, final String message) {
         user.getChatRoom().notifyUsers(user, Command.CHAT_ROOM_MESSAGE, message);
     }
-
 
 
     public Map<String, ChatRoomSubject> getChatRoomContainer() {

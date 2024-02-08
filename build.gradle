@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    implementation files("libs/java-lib-1.4.jar")
+    implementation files("libs/java-lib-1.5.jar")
     implementation 'io.netty:netty-all:4.1.104.Final'
     implementation 'ch.qos.logback:logback-classic:1.2.6'
 
