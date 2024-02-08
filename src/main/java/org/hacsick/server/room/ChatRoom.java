@@ -80,14 +80,14 @@ public class ChatRoom implements ChatRoomSubject {
                      final int limitedNum,
                      final boolean roomLatchFlag,
                      final MessageQueue messageQueue,
-                     final User channel) {
+                     final User owner) {
         this.uniqueKey = uniqueKey;
         this.roomName = roomName;
         this.roomUsers = roomUsers;
         this.limitedNum = limitedNum;
         this.roomLatchFlag = new AtomicBoolean(roomLatchFlag);
         this.messageQueue = messageQueue;
-        this.owner = channel;
+        this.owner = owner;
         this.lock = new ReentrantLock();
     }
 

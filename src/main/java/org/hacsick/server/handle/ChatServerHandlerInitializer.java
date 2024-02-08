@@ -11,6 +11,8 @@ import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 import io.netty.util.CharsetUtil;
 import java.util.UUID;
+import java.util.logging.Logger;
+import org.example.database.DBPing;
 import org.hacsick.server.codec.PayloadEncoder;
 import org.hacsick.server.mq.BlockingMessageQueue;
 import org.hacsick.server.mq.MessageQueue;
@@ -31,22 +33,21 @@ public class ChatServerHandlerInitializer extends ChannelInitializer<SocketChann
     private final ChatRoomSubject lobby;
     private final MessageQueue messageQueue;
 
+    private final ChatRoomManager chatRoomManager;
+
     public ChatServerHandlerInitializer() {
         this.messageQueue = new BlockingMessageQueue();
         this.lobby = ChatRoom.of(UUID.randomUUID().toString(), LOBBY, messageQueue);
+        this.chatRoomManager = ChatRoomManager.of(this.lobby);
     }
 
     @Override
     public void initChannel(SocketChannel ch) {
-        this.lobby.changeOwner(this.createAdmin(ch));
-
-        ChatRoomManager chatRoomManager = ChatRoomManager.of(this.lobby);
-
         ChannelPipeline pipeline = ch.pipeline();
         pipeline.addLast(new JsonObjectDecoder(65536))
                 .addLast(new StringDecoder(CharsetUtil.UTF_8))
                 .addLast(new PayloadDecoder()) // Decoder
-                .addLast(new ChatServerHandler(chatRoomManager))
+                .addLast(new ChatServerHandler(this.chatRoomManager))
                 .addLast(new PayloadEncoder())
                 .addLast(new StringEncoder(CharsetUtil.UTF_8))
         ;
@@ -56,4 +57,15 @@ public class ChatServerHandlerInitializer extends ChannelInitializer<SocketChann
         return User.of("ADMIN", channel, this.lobby);
     }
 
+    public ChatRoomSubject getLobby() {
+        return lobby;
+    }
+
+    public MessageQueue getMessageQueue() {
+        return messageQueue;
+    }
+
+    public ChatRoomManager getChatRoomManager() {
+        return chatRoomManager;
+    }
 }

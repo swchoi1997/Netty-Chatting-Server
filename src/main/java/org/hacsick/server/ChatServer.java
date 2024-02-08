@@ -6,7 +6,11 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import org.hacsick.server.handle.ChatServerHandlerInitializer;
+import org.hacsick.server.room.ChatRoomManager;
 
 public class ChatServer {
 
@@ -21,11 +25,19 @@ public class ChatServer {
         NioEventLoopGroup workerGroup = new NioEventLoopGroup(); // Netty Available Core Count
 
         try {
+            ChatServerHandlerInitializer childHandler = new ChatServerHandlerInitializer();
             final ServerBootstrap server = new ServerBootstrap()
                     .group(bossGroup, workerGroup)
                     .handler(new LoggingHandler(LogLevel.INFO))
                     .channel(NioServerSocketChannel.class)
-                    .childHandler(new ChatServerHandlerInitializer());
+                    .childHandler(childHandler);
+
+            ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+            scheduler.scheduleAtFixedRate(() -> {
+                ChatRoomManager chatRoomManager = childHandler.getChatRoomManager();
+                chatRoomManager.getChatRoomContainer().entrySet().forEach(System.out::println);
+
+            }, 2, 5, TimeUnit.SECONDS);
 
             ChannelFuture future = server.bind(this.serverPort).sync();
             future.channel().closeFuture().sync();
@@ -36,6 +48,7 @@ public class ChatServer {
         }finally {
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();
+
         }
 
 
