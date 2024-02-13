@@ -3,6 +3,7 @@ package org.hacsick.server.user;
 import io.netty.channel.Channel;
 import java.util.Objects;
 import java.util.UUID;
+import org.hacsick.server.message.ServerMeta;
 import org.hacsick.server.room.ChatRoomSubject;
 import org.hacsick.server.message.Command;
 import org.hacsick.server.message.CommonMessage;
@@ -64,9 +65,9 @@ public class User implements Observer {
 
     public void notifyChatMessage(final Payload payload) {
         if (this.chatRoom == null || !this.chatRoom.isActive()) {
-            this.notify(Payload.of("ADMIN",
+            this.notify(Payload.of(ServerMeta.SERVER.getValue(),
                     Command.CHAT_ROOM_DESTROY,
-                    CommonMessage.of("ADMIN", this.getName(), this.chatRoom.getRoomName() + " Is Destroy")));
+                    CommonMessage.of(ServerMeta.SERVER.getValue(), this.getName(), this.chatRoom.getRoomName() + " Is Destroy")));
             return;
         }
         this.notify(payload);
@@ -128,4 +129,6 @@ public class User implements Observer {
                 "name='" + name + '\'' +
                 '}';
     }
+
+
 }

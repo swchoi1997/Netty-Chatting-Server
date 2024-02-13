@@ -9,6 +9,7 @@ public class BlockingMessageQueue implements MessageQueue{
     private final BlockingQueue<Runnable> messageQueue;
 
     public BlockingMessageQueue() {
+        System.out.println(Runtime.getRuntime().availableProcessors());
         this.messageQueue = new ArrayBlockingQueue<>(Runtime.getRuntime().availableProcessors());
     }
 

@@ -25,4 +25,6 @@ public interface ChatRoomSubject {
     String getUniqueKey();
 
     MessageQueue getMessageQueue();
+
+
 }

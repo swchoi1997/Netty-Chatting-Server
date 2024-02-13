@@ -11,15 +11,14 @@ import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 import io.netty.util.CharsetUtil;
 import java.util.UUID;
-import java.util.logging.Logger;
-import org.example.database.DBPing;
+import org.hacsick.server.codec.PayloadDecoder;
 import org.hacsick.server.codec.PayloadEncoder;
+import org.hacsick.server.message.ServerMeta;
 import org.hacsick.server.mq.BlockingMessageQueue;
 import org.hacsick.server.mq.MessageQueue;
 import org.hacsick.server.room.ChatRoom;
 import org.hacsick.server.room.ChatRoomManager;
 import org.hacsick.server.room.ChatRoomSubject;
-import org.hacsick.server.codec.PayloadDecoder;
 import org.hacsick.server.user.User;
 
 public class ChatServerHandlerInitializer extends ChannelInitializer<SocketChannel> {
@@ -54,7 +53,7 @@ public class ChatServerHandlerInitializer extends ChannelInitializer<SocketChann
     }
 
     private User createAdmin(SocketChannel channel) {
-        return User.of("ADMIN", channel, this.lobby);
+        return User.of(ServerMeta.SERVER.getValue(), channel, this.lobby);
     }
 
     public ChatRoomSubject getLobby() {

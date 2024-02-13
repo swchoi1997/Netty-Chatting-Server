@@ -17,6 +17,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import org.hacsick.server.message.Command;
 import org.hacsick.server.message.CommonMessage;
 import org.hacsick.server.message.Payload;
+import org.hacsick.server.message.ServerMeta;
 import org.hacsick.server.mq.MessageQueue;
 import org.hacsick.server.user.User;
 
@@ -165,7 +166,7 @@ public class ChatRoom implements ChatRoomSubject {
     public void changeOwner(final User user) {
         lock.lock();
         try {
-            if ("ADMIN".equals(user.getName())) {
+            if (ServerMeta.SERVER.getValue().equals(user.getName())) {
                 this.owner = user;
             } else {
                 throw new UnsupportedOperationException();
@@ -249,6 +250,18 @@ public class ChatRoom implements ChatRoomSubject {
     @Override
     public MessageQueue getMessageQueue() {
         return this.messageQueue;
+    }
+
+    @Override
+    public String toString() {
+        return "ChatRoom{" +
+                "uniqueKey='" + uniqueKey + '\'' +
+                ", activeFlag=" + activeFlag +
+                ", roomName='" + roomName + '\'' +
+                ", owner=" + owner +
+                ", roomUsers=" + roomUsers +
+                ", limitedNum=" + limitedNum +
+                '}';
     }
 
     @Override

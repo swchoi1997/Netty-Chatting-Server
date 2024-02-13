@@ -12,10 +12,14 @@ public class CommonMessage implements Message, Serializable {
     }
 
     public static CommonMessage ofAdmin(final String to, final String message) {
-        return new CommonMessage("ADMIN", to, message);
+        return new CommonMessage(ServerMeta.SERVER.getValue(), to, message);
     }
 
-    private CommonMessage(final String from, final String to, final String message) {
+    public static CommonMessage fromAdmin(final String from, final String message) {
+        return new CommonMessage(from, ServerMeta.SERVER.getValue(), message);
+    }
+
+    protected CommonMessage(final String from, final String to, final String message) {
         this.from = from;
         this.to = to;
         this.message = message;

@@ -9,6 +9,6 @@ public class PayloadUtils {
 
     public static <T extends Message> Payload<T> createMessage(final Command command,
                                                                final T message) {
-        return Payload.of(UUID.randomUUID().toString(), command, message);
+        return Payload.of(command, message);
     }
 }

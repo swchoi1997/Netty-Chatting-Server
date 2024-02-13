@@ -1,11 +1,16 @@
 package org.hacsick.server.message;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 public class Payload<T extends Message> implements Serializable {
     private final String uniqueValue;
     private final Command command;
     private final T body;
+
+    public static <T extends Message> Payload<T> of(final Command command, final T body) {
+        return new Payload<T>(UUID.randomUUID().toString(), command, body);
+    }
 
     public static <T extends Message> Payload<T> of(final String uniqueValue, final Command command, final T body) {
         return new Payload<T>(uniqueValue, command, body);

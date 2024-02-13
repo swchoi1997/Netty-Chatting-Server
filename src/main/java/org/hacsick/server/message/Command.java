@@ -16,6 +16,7 @@ public enum Command {
     CHAT_ROOM_DESTROY(204),
     CHAT_ROOM_ERROR(205),
     CHAT_ROOM_MESSAGE(206),
+    CHAT_ROOM_LIST(207),
     KNOWN(-1)
     ;
 
