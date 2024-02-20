@@ -17,7 +17,7 @@ public enum Command {
     CHAT_ROOM_ERROR(205),
     CHAT_ROOM_MESSAGE(206),
     CHAT_ROOM_LIST(207),
-    KNOWN(-1)
+    UNKNOWN(-1)
     ;
 
     private final static Map<Integer, Command> COMMAND_MAP =
@@ -34,6 +34,6 @@ public enum Command {
     }
 
     public static Command find(final Integer key) {
-        return Optional.ofNullable(COMMAND_MAP.get(key)).orElse(KNOWN);
+        return Optional.ofNullable(COMMAND_MAP.get(key)).orElse(UNKNOWN);
     }
 }

@@ -15,7 +15,7 @@ public class CommonMessage implements Message, Serializable {
         return new CommonMessage(ServerMeta.SERVER.getValue(), to, message);
     }
 
-    public static CommonMessage fromAdmin(final String from, final String message) {
+    public static CommonMessage toAdmin(final String from, final String message) {
         return new CommonMessage(from, ServerMeta.SERVER.getValue(), message);
     }
 

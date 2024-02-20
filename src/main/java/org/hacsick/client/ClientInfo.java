@@ -13,7 +13,9 @@ public class ClientInfo {
     public void setClientInfo(final String uniqueValue,
                               final String name,
                               final String currentChatRoomName) {
-
+        this.uniqueValue = uniqueValue;
+        this.name = name;
+        this.currentChatRoomName = currentChatRoomName;
 
     }
 

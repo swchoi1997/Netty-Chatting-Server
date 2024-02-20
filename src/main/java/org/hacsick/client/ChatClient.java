@@ -19,35 +19,32 @@ public class ChatClient {
     }
 
     public void start() {
+        final ClientInfo info = new ClientInfo();
+
         EventLoopGroup group = new NioEventLoopGroup();
 
         try {
             Bootstrap clientBootStrap = new Bootstrap()
                     .group(group)
                     .channel(NioSocketChannel.class)
-                    .handler(new ChatClientHandlerInitializer());
+                    .handler(new ChatClientHandlerInitializer(info));
 
             ChannelFuture f = clientBootStrap
                     .connect(this.hostIp, Integer.parseInt(this.hostPort))
                     .sync();
 
-
-            Scanner scanner = new Scanner(System.in);
-            while (true) {
-                String input = scanner.nextLine();
-
-                if (input == null) {
-                    continue;
+            f.channel().eventLoop().execute(() -> {
+                Scanner scanner = new Scanner(System.in);
+                while (true) {
+                    final String input = scanner.nextLine();
+                    if ("exit".equals(input)) {
+                        scanner.close();
+                        f.channel().close();
+                        break;
+                    }
+                    f.channel().writeAndFlush(input + "\r\n");
                 }
-
-                if ("exit".equalsIgnoreCase(input)) {
-                    break;
-                }
-
-                f.channel().writeAndFlush(input + "\r\n");
-            }
-
-            scanner.close();
+            });
             f.channel().closeFuture().sync();
 
         } catch (InterruptedException e) {

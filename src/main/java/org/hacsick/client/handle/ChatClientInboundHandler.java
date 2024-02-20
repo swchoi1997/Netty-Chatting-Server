@@ -9,13 +9,15 @@ import org.hacsick.server.message.Payload;
 
 public class ChatClientInboundHandler extends ChannelInboundHandlerAdapter {
 
-    private final ClientInfo info = new ClientInfo();
-    /* TODO
-    정보 가져와서 어떻게 저장하지?, 그리고 OutBound일때 알아서 내 아이디를 적어야함 ㅋㅋ
-     */
+    private final ClientInfo info;
+
+    public ChatClientInboundHandler(final ClientInfo info) {
+        this.info = info;
+    }
 
     @Override
     public void channelActive(final ChannelHandlerContext ctx) throws Exception {
+        super.channelActive(ctx);
         /*
         Server Connection Complete
          */
@@ -35,7 +37,6 @@ public class ChatClientInboundHandler extends ChannelInboundHandlerAdapter {
             case Command.CHAT_ROOM_LIST -> {
                 System.out.println(payload.getBody().getMessage());
             }
-
         }
 
 
